@@ -2,9 +2,6 @@
 //
 
 #include "stdafx.h"
-#include "conio.h"
-#include "stdio.h"
-#include "string.h"
 #include "Area.h"
 #include <iostream>
 using namespace std;
@@ -14,10 +11,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	Area* a = new Area(10, 10, 0, 0);
 	int s = 0;
 	while (s < 100) {
-		cout << "Floor" << endl;
 		a->printArray();
 
-		cout << "1 to set, 2 to pathfind";
+		cout << "1 to set, 2 to pathfind" << endl;
 		cin >> s;
 		switch (s) {
 		case 1: 
