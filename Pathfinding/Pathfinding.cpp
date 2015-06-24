@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Area.h"
 #include <iostream>
+
 using namespace std;
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -32,7 +33,6 @@ int _tmain(int argc, _TCHAR* argv[])
 			a->setTile(z, x, t);
 			break;
 		case 2:
-			cout << "Path" << endl << endl;
 			a->fillPaths();
 			a->printPaths();
 			break;
@@ -40,6 +40,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			break;
 		}
 	}
+
+	delete a;
 	return 0;
 }
-

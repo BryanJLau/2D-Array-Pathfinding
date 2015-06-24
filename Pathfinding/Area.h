@@ -1,13 +1,15 @@
 #pragma once
 
-#include <stack>
 #include <vector>
+#include <deque>
+
 using namespace std;
 
 class Area
 {
 public:
 	Area(int z, int x, int sz, int sx);
+	Area(int z, int x, int sz, int sx, vector<int> v);
 	~Area();
 
 	// Accessors
@@ -17,7 +19,6 @@ public:
 
 	// Mutators
 	void setTile(int z, int x, int t);
-	void getPathLengthGrid(vector<int>& pathLengthGrid);
 	void fillPaths();
 
 	// Debugging info
@@ -25,6 +26,8 @@ public:
 	void printPaths();
 
 private:
+	void getPathLengthGrid(vector<int>& pathLengthGrid);
+
 	// Represents a single tile in the array
 	struct Cell {
 		int x;
@@ -37,5 +40,5 @@ private:
 	
 	// Dynamic arrays for expandable restaurants
 	vector<int> floor;				// Represents the actual floor of the restaurant
-	vector<stack<Cell*>*> paths;	// Holds the shortest distance path for tables only
+	vector<deque<Cell*>> paths;		// Holds the shortest distance path for tables only
 };
