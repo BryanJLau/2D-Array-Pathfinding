@@ -51,6 +51,7 @@ public:
 	int getTileType(int z, int x);
 	int getCellPathLength(int sz, int sx, int dz, int dx);
 	deque<Cell*> getCellPath(int sz, int sx, int dz, int dx);
+	deque<Cell*> getFullPath(int sz, int sx, int dz, int dx);
 
 	// Mutators
 	void setTile(int z, int x, int tileType);

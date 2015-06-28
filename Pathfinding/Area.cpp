@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include <stdlib.h>
+#include <time.h>
 #include "Area.h"
 #include <algorithm>
 #include <iostream>
@@ -111,6 +113,24 @@ deque<Cell*> Area::getCellPath(int sz, int sx, int dz, int dx)
 		return d;
 	else
 		return paths.at(getIndex(sz, sx)).at(getIndex(dz, dx));
+}
+
+// Get the round trip from (sx, sz) to (dx, dz)
+deque<Cell*> Area::getFullPath(int sz, int sx, int dz, int dx)
+{
+	deque<Cell*> d;
+	if (!isInBounds(sz, sx) || !isInBounds(dz, dz))
+		return d;
+	else {
+		int i;
+		for (i = 0; i < paths.at(getIndex(sz, sx)).at(getIndex(dz, dx)).size(); i++)
+			d.push_back(paths.at(getIndex(sz, sx)).at(getIndex(dz, dx)).at(i));
+		for (; i >= 0; i--)
+			d.push_back(paths.at(getIndex(sz, sx)).at(getIndex(dz, dx)).at(i));
+	}
+		
+		
+	return d;
 }
 
 // Because we are using a vector to represent a 2D array, there must be a bit of math
