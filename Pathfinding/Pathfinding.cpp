@@ -1,6 +1,3 @@
-// Pathfinding.cpp : Defines the entry point for the console application.
-//
-
 #include "stdafx.h"
 #include "Area.h"
 #include <iostream>
@@ -30,7 +27,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			cout << "t: ";
 			cin >> t;
 
-			a->setTile(z, x, t);
+			a->setTile(z, x, (TileType) t);
 			break;
 		case 2:
 			a->fillPaths();
