@@ -5,11 +5,7 @@
 
 using namespace std;
 
-enum TileType {
-	WALKABLE, START, OBSTACLE, RECEPTION, RECEPTION_WORKER, TABLE, STOVE,
-	STOVE_WORKER, BAR, BAR_WORKER, TOILET, INVALID
-};
-enum TaskType { SERVE, WASH };
+enum TileType { WALKABLE, START, DESTINATION, OBSTACLE, INVALID };
 
 // Represents a single tile in the array
 struct Cell {
@@ -49,12 +45,9 @@ public:
 
 	bool isInBounds(int z, int x);
 	bool isWalkable(int z, int x);
-	bool isReserved(int z, int x);
 
 	// Mutators
 	void setTile(int z, int x, TileType tileType);
-	void reserveTile(int z, int x);
-	void unreserveTile(int z, int x);
 	void fillPaths();
 	void clearPaths();
 
@@ -72,9 +65,7 @@ private:
 	int m_height;
 
 	// Dynamic arrays for expandable restaurants
-	vector<TileType> v_typeVector;				// Represents the actual floor of the restaurant
+	vector<TileType> v_typeVector;
 	vector<vector<int>> v_pathLengthVector;		// Represents the path lengths to the appropriate destinations
 	vector<vector<deque<Cell*>>> v_pathVector;	// Holds the shortest distance path for tables only
-	vector<bool> v_reservationVector;			// Tells whether or not a cell is being used for an action
-	vector<int> v_decorationVector;				// Represents what decoration occupies the table (IDs)
 };

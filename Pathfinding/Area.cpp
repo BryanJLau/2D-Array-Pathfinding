@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Area.h"
 #include <algorithm>
 #include <iostream>
@@ -17,11 +18,9 @@ Area::Area(int height, int width, int sz, int sx)
 	m_start.x = sx;
 	m_start.z = sz;
 
-	// Dynamically allocate the vectors
 	v_typeVector = vector<TileType>(width * height);
-	v_reservationVector = vector<bool>(width * height);
-	fill(v_reservationVector.begin(), v_reservationVector.end(), false);
-	v_decorationVector = vector<int>(width * height);
+	fill(v_typeVector.begin(), v_typeVector.end(), WALKABLE);
+	
 
 	// Set the default values of the path length to INT_MAX
 	v_pathLengthVector = vector<vector<int>>(width * height);
@@ -48,11 +47,8 @@ Area::Area(int height, int width, int sz, int sx, vector<TileType> existingVecto
 	m_start.x = sx;
 	m_start.z = sz;
 
-	// Dynamically allocate the vectors
-	v_typeVector = vector<TileType>(existingVector);
-	v_reservationVector = vector<bool>(width * height);
-	fill(v_reservationVector.begin(), v_reservationVector.end(), false);
-	v_decorationVector = vector<int>(width * height);
+	v_typeVector = vector<TileType>(width * height);
+	fill(v_typeVector.begin(), v_typeVector.end(), WALKABLE);
 
 	// Set the default values of the path length to INT_MAX
 	v_pathLengthVector = vector<vector<int>>(width * height);
@@ -92,19 +88,7 @@ TileType Area::getTileType(int z, int x)
 }
 
 TileType Area::getDestinationType(TileType origin) {
-	switch (origin) {
-	case START:
-		return RECEPTION;
-	case RECEPTION:
-	case STOVE:
-	case BAR:
-		return TABLE;
-	case TOILET:
-	case TABLE:
-		return START;
-	}
-
-	return INVALID;
+	return DESTINATION;
 }
 
 // Used primarily in pathfinding
@@ -141,13 +125,6 @@ bool Area::isWalkable(int z, int x)
 	return false;
 }
 
-bool Area::isReserved(int z, int x) {
-	if (isInBounds(z, x))
-		return v_reservationVector.at(getIndex(z, x));
-	else
-		return false;
-}
-
 // Because we are using a vector to represent a 2D array, there must be a bit of math
 // to translate from two numbers to one
 int Area::getIndex(int z, int x)
@@ -163,14 +140,6 @@ void Area::setTile(int z, int x, TileType tileType)
 {
 	if (isInBounds(z, x))
 		v_typeVector[getIndex(z, x)] = tileType;
-}
-
-void Area::reserveTile(int z, int x) {
-	if (isInBounds(z, x)) v_reservationVector.at(getIndex(z, x)) = true;
-}
-
-void Area::unreserveTile(int z, int x){
-	if (isInBounds(z, x)) v_reservationVector.at(getIndex(z, x)) = false;
 }
 
 void Area::fillPaths()
